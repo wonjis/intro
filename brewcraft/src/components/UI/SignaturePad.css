@@ -1,0 +1,33 @@
+.signature-pad-container {
+    width: 100%;
+    margin-bottom: var(--spacing-lg);
+}
+
+.canvas-wrapper {
+    border: 1px solid #e0e0e0;
+    border-radius: var(--radius-md);
+    background-color: #f9f9f9;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+.signature-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-xs);
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.btn-link:hover {
+    color: var(--color-primary-dark);
+}

@@ -1,0 +1,27 @@
+.progress-container {
+    padding: var(--spacing-lg) var(--spacing-md);
+    position: relative;
+}
+
+.progress-track {
+    height: 4px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: var(--spacing-sm);
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--color-secondary);
+    transition: width 0.5s ease;
+}
+
+.steps-indicator {
+    gap: var(--spacing-sm);
+    justify-content: space-between;
+    /* Distribute dots if we wanted them on the line, but here we just center them or hide them */
+    display: none;
+    /* Hiding dots for a cleaner look, just using the bar. Or we can enable them. */
+}

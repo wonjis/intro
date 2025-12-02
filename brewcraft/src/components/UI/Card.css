@@ -1,0 +1,48 @@
+.selection-card {
+    background-color: var(--color-white);
+    border: 1px solid #E0E0E0;
+    /* Subtle border */
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: none;
+    /* Remove default shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+.selection-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.selection-card.selected {
+    border-color: var(--color-primary);
+    background-color: rgba(0, 163, 224, 0.03);
+    /* Very subtle blue tint */
+    box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.selection-card h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.selection-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+}
+
+.selection-card .icon {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+    /* Use primary blue for icons */
+}
