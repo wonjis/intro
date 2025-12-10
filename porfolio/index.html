@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wonji Seo - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Lora:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-black: #000000;
+            --text-white: #ffffff;
+            --text-gray: #b8b8b8;
+            --border-gray: #333333;
+            --accent: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--bg-black);
+            color: var(--text-white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-gray);
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            padding: 1rem 4rem;
+            background: rgba(0, 0, 0, 0.98);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInRight 0.8s ease forwards;
+        }
+
+        .nav-links a:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .nav-links a:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .nav-links a:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .nav-links a:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-white);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            opacity: 1;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: fadeInRight 0.8s ease forwards 0.6s;
+        }
+
+        .social-icons a {
+            color: var(--text-white);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .social-icons a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 8rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* About Section - Combined */
+        #about {
+            background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+            min-height: auto;
+            padding: 8rem 4rem;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-unified {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+
+        /* Hero Introduction */
+        .about-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            max-width: 1200px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        /* Two Column: Image + Status */
+        .about-intro {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 4rem;
+            align-items: start;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.6s;
+        }
+
+        .about-intro-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #1a1a1a;
+            border: 1px solid var(--border-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-intro-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.4));
+        }
+
+        .about-intro-text {
+            padding-top: 2rem;
+        }
+
+        .about-intro-text p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+
+        .about-social {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-social a {
+            color: var(--text-white);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .about-social a:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Detailed Biography */
+        .about-detail {
+            display: grid;
+            grid-template-columns: 1fr 500px;
+            gap: 6rem;
+            align-items: center;
+            padding-top: 4rem;
+        }
+
+        .about-detail-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            letter-spacing: -0.5px;
+        }
+
+        .about-detail-text p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-gray);
+            margin-bottom: 1.8rem;
+        }
+
+        .about-detail-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #1a1a1a;
+            border: 1px solid var(--border-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Side Projects Section */
+        #side-projects {
+            background: #000000;
+        }
+
+        .projects-content {
+            text-align: center;
+        }
+
+        .projects-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .project-card {
+            padding: 3rem 2rem;
+            border: 1px solid var(--border-gray);
+            transition: all 0.4s ease;
+            position: relative;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid var(--border-gray);
+            transform: translate(6px, 6px);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .project-card:hover::before {
+            transform: translate(10px, 10px);
+        }
+
+        .project-card:hover {
+            transform: translate(-2px, -2px);
+        }
+
+        .project-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* Blog Posts Section */
+        #blog-posts {
+            background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .blog-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+        }
+
+        .blog-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            border-bottom: 1px solid var(--border-gray);
+            margin-bottom: 3rem;
+        }
+
+        .blog-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--text-white);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-tab:hover {
+            color: var(--text-white);
+        }
+
+        .blog-tab.active {
+            color: var(--text-white);
+        }
+
+        .blog-tab.active::after {
+            transform: scaleX(1);
+        }
+
+        .blog-notice {
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            padding: 2.5rem;
+            border: 1px solid var(--border-gray);
+            text-align: center;
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .blog-notice::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid var(--border-gray);
+            transform: translate(8px, 8px);
+            z-index: -1;
+        }
+
+        .blog-notice p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+        }
+
+        .blog-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-post-card {
+            padding: 2.5rem;
+            border: 1px solid var(--border-gray);
+            background: rgba(255, 255, 255, 0.01);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .blog-post-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid var(--border-gray);
+            transform: translate(6px, 6px);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .blog-post-card:hover::before {
+            transform: translate(10px, 10px);
+        }
+
+        .blog-post-card:hover {
+            transform: translate(-2px, -2px);
+        }
+
+        .blog-post-category {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .blog-post-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .blog-post-date {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .blog-post-card p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-post-link {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .blog-post-link::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        .blog-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-gray);
+        }
+
+        .blog-empty p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .blog-load-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .load-more-btn {
+            background: transparent;
+            border: 1px solid var(--text-white);
+            color: var(--text-white);
+            padding: 1rem 3rem;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .load-more-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--text-white);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .load-more-btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .load-more-btn:hover {
+            color: var(--bg-black);
+        }
+
+        .blog-featured {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .blog-featured-text h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .blog-featured-text p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-gray);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #000000;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+        }
+
+        .contact-email {
+            font-size: 1.5rem;
+            color: var(--text-white);
+            text-decoration: none;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--text-white);
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            letter-spacing: 1px;
+        }
+
+        .contact-social {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-social a {
+            color: var(--text-white);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .contact-social a:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--text-white));
+            z-index: 1001;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.1s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            section {
+                padding: 6rem 2rem;
+            }
+
+            .about-intro {
+                grid-template-columns: 1fr;
+            }
+
+            .about-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-posts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-featured {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .social-icons {
+                display: none;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-progress"></div>
+
+    <nav>
+        <div class="logo">Wonji Seo</div>
+        <div class="nav-links">
+            <a href="#about" class="nav-link active">About</a>
+            <a href="#side-projects" class="nav-link">Side Projects</a>
+            <a href="#blog-posts" class="nav-link">Blog Posts</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://x.com/seowwwwjjjj" target="_blank" rel="noopener noreferrer" aria-label="X/Twitter">𝕏</a>
+            <a href="https://www.linkedin.com/in/wonji-seo/" target="_blank" rel="noopener noreferrer"
+                aria-label="LinkedIn">in</a>
+            <a href="https://growthery.substack.com/" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
+                    <path
+                        d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <section id="about" class="visible">
+        <div class="container">
+            <div class="about-unified">
+                <!-- Hero Introduction -->
+                <div class="about-hero">
+                    <h1>My name is Wonji Seo. I'm a product manager with expertise in AI and commerce.</h1>
+                </div>
+
+                <!-- Two Column Layout: Image + Current Status -->
+                <div class="about-intro">
+                    <div class="about-intro-image">
+                        <img src="headshot.jpg" alt="Wonji Seo" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="about-intro-text">
+                        <p>I'm currently studying at University of Michigan as a MBA student.</p>
+                        <p>But I most recently worked as a product manager in commerce startup in Korea, and now
+                            planning to continue my career in the U.S. tech industry.</p>
+                        <div class="about-social">
+                            <a href="https://x.com/seowwwwjjjj" target="_blank" rel="noopener noreferrer"
+                                aria-label="X/Twitter">𝕏</a>
+                            <a href="https://www.linkedin.com/in/wonji-seo/" target="_blank" rel="noopener noreferrer"
+                                aria-label="LinkedIn">in</a>
+                            <a href="https://growthery.substack.com/" target="_blank" rel="noopener noreferrer"
+                                aria-label="Substack">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+                                    style="vertical-align: middle;">
+                                    <path
+                                        d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Biography Section -->
+                <div class="about-detail">
+                    <div class="about-detail-text">
+                        <h2>About Me</h2>
+                        <p>I'm a product manager with deep expertise in AI security. My career has included work on
+                            Google's core products, Cloudflare's machine learning platform, and burgeoning generative AI
+                            tools. I am currently pursuing my MBA at Harvard Business School.</p>
+                        <p>My career began at Cloudflare, where I led bot detection and helped secure over 20 million
+                            websites. Our technology used ML to identify bots and immediately stop them. Within a year,
+                            I grew product revenue over 400%. A year later, we had become the most popular bot solution
+                            and created a CAPTCHA replacement that eliminated the need for humans to click on traffic
+                            lights.</p>
+                        <p>Shortly after, I took a job at Google, helping secure customer data across the company's
+                            products. I improved security protections that kept billions of users safe from account
+                            hijacking and data breaches.</p>
+                    </div>
+                    <div class="about-detail-image">
+                        <img src="headshot.jpg" alt="Wonji Seo" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="side-projects">
+        <div class="container">
+            <div class="projects-content">
+                <h2>Side Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>Project One</h3>
+                        <p>A description of your first side project. This could be anything from a personal website to a
+                            research paper to a creative endeavor.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Project Two</h3>
+                        <p>Another interesting project you've worked on. Share what inspired you, the challenges you
+                            faced, and what you learned.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Project Three</h3>
+                        <p>Your third project showcasing your diverse interests and skills beyond your primary
+                            professional focus.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog-posts">
+        <div class="container">
+            <div class="blog-content">
+                <div class="blog-header">
+                    <h2>Blog Posts</h2>
+                    <div class="blog-tabs">
+                        <button class="blog-tab active" data-category="all">All</button>
+                        <button class="blog-tab" data-category="reflection">Reflection</button>
+                        <button class="blog-tab" data-category="analysis">Analysis</button>
+                        <button class="blog-tab" data-category="how-to">How-To</button>
+                    </div>
+                </div>
+
+                <div class="blog-notice">
+                    <p>As cybersecurity threats have worsened, the nature of my work has become more sensitive. I am
+                        unable to post regular updates on most topics. However, I will continue to update this page with
+                        personal projects and industry trends (where appropriate).</p>
+                </div>
+
+                <div class="blog-posts-grid" id="blogPostsContainer">
+                    <!-- Posts will be dynamically inserted here -->
+                </div>
+
+                <div class="blog-empty" id="emptyState" style="display: none;">
+                    <p>No posts available in this category yet. Check back soon!</p>
+                </div>
+
+                <div class="blog-load-more" id="loadMoreContainer" style="display: none;">
+                    <button class="load-more-btn" id="loadMoreBtn">Load More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2>Get In Touch</h2>
+                <p>I'm always open to interesting conversations and collaboration opportunities.</p>
+                <a href="mailto:amyseo3820@gmail.com" class="contact-email">amyseo3820@gmail.com</a>
+                <div class="contact-social">
+                    <a href="https://x.com/seowwwwjjjj" target="_blank" rel="noopener noreferrer"
+                        aria-label="X/Twitter">𝕏</a>
+                    <a href="https://www.linkedin.com/in/wonji-seo/" target="_blank" rel="noopener noreferrer"
+                        aria-label="LinkedIn">in</a>
+                    <a href="https://growthery.substack.com/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Substack">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                            style="vertical-align: middle;">
+                            <path
+                                d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height);
+            document.querySelector('.scroll-progress').style.transform = `scaleX(${scrolled})`;
+        });
+
+        // Intersection Observer for sections
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add visible class to section
+                    entry.target.classList.add('visible');
+
+                    // Update active nav link
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scroll with offset for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Nav scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const nav = document.querySelector('nav');
+
+            if (currentScroll > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Initial visibility check
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8) {
+                section.classList.add('visible');
+            }
+        });
+
+        // Set first section as active on load
+        if (window.scrollY < 100) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            navLinks[0].classList.add('active');
+        }
+
+        // Blog Posts System
+        const blogPosts = [
+            {
+                title: "I Visited All 472 Subway Stations in New York",
+                category: "reflection",
+                date: "November 15, 2024",
+                excerpt: "New York's subway system is the largest in the world. It cuts across bridges and through underwater tunnels, carrying over five million people each day.",
+                link: "#"
+            },
+            {
+                title: "Understanding AI Security Threats in 2024",
+                category: "analysis",
+                date: "October 22, 2024",
+                excerpt: "As AI systems become more prevalent, understanding the security landscape is crucial for product managers and engineers alike.",
+                link: "#"
+            },
+            {
+                title: "How to Build Better CAPTCHAs",
+                category: "how-to",
+                date: "September 8, 2024",
+                excerpt: "A comprehensive guide to creating user-friendly bot detection systems that don't frustrate your users.",
+                link: "#"
+            },
+            {
+                title: "Reflections on My Time at Google",
+                category: "reflection",
+                date: "August 14, 2024",
+                excerpt: "Looking back at the challenges and triumphs of working on security for billions of users at one of the world's largest tech companies.",
+                link: "#"
+            },
+            {
+                title: "The Evolution of Bot Detection",
+                category: "analysis",
+                date: "July 3, 2024",
+                excerpt: "An analysis of how machine learning has transformed the way we identify and stop malicious bots on the internet.",
+                link: "#"
+            },
+            {
+                title: "Getting Started with ML in Cybersecurity",
+                category: "how-to",
+                date: "June 19, 2024",
+                excerpt: "A practical guide for security professionals looking to integrate machine learning into their threat detection systems.",
+                link: "#"
+            }
+        ];
+
+        let currentCategory = 'all';
+        let visiblePostsCount = 3;
+
+        function filterPosts(category) {
+            if (category === 'all') {
+                return blogPosts;
+            }
+            return blogPosts.filter(post => post.category === category);
+        }
+
+        function renderPosts() {
+            const container = document.getElementById('blogPostsContainer');
+            const emptyState = document.getElementById('emptyState');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+
+            const filteredPosts = filterPosts(currentCategory);
+            const postsToShow = filteredPosts.slice(0, visiblePostsCount);
+
+            container.innerHTML = '';
+
+            if (postsToShow.length === 0) {
+                emptyState.style.display = 'block';
+                loadMoreContainer.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            postsToShow.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.className = 'blog-post-card';
+                postCard.innerHTML = `
+                    <div class="blog-post-category">${post.category}</div>
+                    <h3>${post.title}</h3>
+                    <div class="blog-post-date">${post.date}</div>
+                    <p>${post.excerpt}</p>
+                    <a href="${post.link}" class="blog-post-link">Read More</a>
+                `;
+                container.appendChild(postCard);
+            });
+
+            // Show/hide load more button
+            if (filteredPosts.length > visiblePostsCount) {
+                loadMoreContainer.style.display = 'block';
+            } else {
+                loadMoreContainer.style.display = 'none';
+            }
+        }
+
+        // Tab switching
+        const blogTabs = document.querySelectorAll('.blog-tab');
+        blogTabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                blogTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.getAttribute('data-category');
+                visiblePostsCount = 3;
+                renderPosts();
+            });
+        });
+
+        // Load more button
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        loadMoreBtn.addEventListener('click', function () {
+            visiblePostsCount += 3;
+            renderPosts();
+        });
+
+        // Initial render
+        renderPosts();
+    </script>
+</body>
+
+</html>
